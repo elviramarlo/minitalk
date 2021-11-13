@@ -6,7 +6,7 @@
 #    By: elvmarti <elvmarti@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/11/11 14:52:38 by elvmarti          #+#    #+#              #
-#    Updated: 2021/11/13 19:49:09 by elvmarti         ###   ########.fr        #
+#    Updated: 2021/11/13 19:51:04 by elvmarti         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -33,8 +33,8 @@ CFLAGS = -Wall -Werror -Wextra
 RM = rm -f
 
 $(NAME): $(OBJS_CLIENT) $(OBJS_SERVER)
-		$(CC) ${CFLAGS} ${SRCS_CLIENT} -I $(HEADER) -L. -o $(NAME)
-		$(CC) ${CFLAGS} ${SRCS_SERVER} -I $(HEADER) -L. -o $(NAME_CLIENT)
+		$(CC) ${CFLAGS} ${SRCS_SERVER} -I $(HEADER) -L. -o $(NAME) 
+		$(CC) ${CFLAGS} ${SRCS_CLIENT} -I $(HEADER) -L. -o $(NAME_CLIENT)
 
 all: $(NAME)
 
