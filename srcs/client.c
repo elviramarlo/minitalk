@@ -6,11 +6,17 @@
 /*   By: elvmarti <elvmarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/07 21:08:59 by elvmarti          #+#    #+#             */
-/*   Updated: 2021/11/13 18:56:02 by elvmarti         ###   ########.fr       */
+/*   Updated: 2021/11/17 18:17:08 by elvmarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minitalk.h"
+
+void	mens(int signum)
+{
+	if (signum == SIGUSR1)
+		write(1, "-", 1);
+}
 
 static void	send_string(pid_t pid, char c)
 {
@@ -19,16 +25,18 @@ static void	send_string(pid_t pid, char c)
 	i = 0;
 	while (i < 8)
 	{
+		usleep(200);
 		if (c & (1 << i))
 			kill(pid, SIGUSR1);
 		else
 			kill(pid, SIGUSR2);
 		i++;
-		usleep(500);
+		signal(SIGUSR1, mens);
+		usleep(200);
 	}
 }
 
-static int	get_pid(char *str)
+static int	get_pid_server(char *str)
 {
 	int	i;
 
@@ -58,13 +66,13 @@ int	main(int argc, char **argv)
 	}
 	else
 	{
-		pid = get_pid(argv[1]);
+		pid = get_pid_server(argv[1]);
 		while (argv[2][i])
 		{
 			send_string(pid, argv[2][i]);
 			i++;
 		}
-		send_string(pid, '\n');
 	}
+	//write(1, '\n', 1);
 	return (0);
 }
